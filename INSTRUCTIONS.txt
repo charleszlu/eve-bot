@@ -1,0 +1,65 @@
+====== Eve listening bot installation on UNRAID ====
+
+(starting from fresh)
+Prerequisite: python v2.6+
+
+1. Download google.protobuf (Protocol buffer) source code zip package
+2. Download Nanopb binary code (plain-C implementation of Google's Protocol Buffers)
+3. Download eve-bot python source code
+4. Download the required setuptools-0.6c11-py2.6.egg file
+5. Extract the python and the src folder from protobuf-2.4.1.zip into a folder called protobuf
+6. Move the protobuf folder into the eve-bot folder
+6. Extract the runtime Nanopb generator-bin folder and merge with the python folder
+7. Copy the setuptools-0.6c11-py2.6.egg file into the eve-bot/protobuf/python folder
+8. In terminal, navigate to the eve-bot/protobuf/python folder.
+9. Set up the required python package by typing:
+		$ protoc --version # this is to make sure both Nanopb and protobuf versions are the same
+		$ python setup.py test # Test to make sure no errors
+		$ python setup.py install	
+10. Copy the latest version of Mumble.proto file into the python folder
+11. In terminal, generate the necessary Mumble_pb2.py:
+		$ protoc --python_out=. Mumble.proto
+12. Copy the generated Mumble_pb2.py file into the eve-bot folder.
+	
+	
+====================================================
+	
+	
+(To run every time the server restarts)
+Run the mumble-mimic.sh script
+
+OR
+
+1. Set up the python2 command:
+	$ ln -s /usr/bin/python /usr/bin/python2
+2. Install the required python plugin for google's protobuf (Protocol buffer)
+	$ cd /boot/custom/etc/murmur.d/eve-bot/protobuf/python
+	$ setup.py install
+	$ cd ../..
+2. Run the bot with the specified delay:
+	$ eve-bot.py -e "BBU" -r "BBU Spectator (with delay)" -s localhost -p 64738 -d 105 -n "ListeningBot" -m "Delayed-" &
+
+	
+====================================================
+	
+
+(To update)
+NOTE: Perform update on a x86 machine, or install protobuf for the specific architecture
+1. Copy the latest version of Mumble.proto file into the eve-bot/protobuf/python folder
+2. In terminal, generate the necessary Mumble_pb2.py:
+		$ protoc --python_out=. Mumble.proto
+3. Copy the generated Mumble_pb2.py file into the eve-bot folder.
+4. Modify the eve-bot.py file (Search for keyword: Version) to change the version messages.
+5. Restart the server or restart eve-bot
+
+
+====== Eve listening bot running on Raspberry Pi (raspbian) ====
+
+
+1. Need to install the correct hashlib that contains md5
+		$ sudo apt-get python-pip
+		$ sudo pip install hashlib
+2. Go into protobuf/python directory and test the setup file
+		$ sudo python setup.py test
+3. Execute the shell script
+		sudo ./mumble-mimic.sh
