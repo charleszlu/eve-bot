@@ -416,10 +416,10 @@ class mumbleConnection(threading.Thread):
             return
         print time.strftime("%a, %d %b %Y %H:%M:%S +0000"),self.threadName,"connected to server"
         pbMess = Mumble_pb2.Version()
-        pbMess.release="1.2.13"
+        pbMess.release="1.2.14"
         #pbMess.version=66048
 		#If version 1.2.7 then use bit masked version (1 << 16) + (2 << 8) + 7 => 66055
-        pbMess.version=66061
+        pbMess.version=66062
         pbMess.os=platform.system()
         pbMess.os_version="evebot1.0.2"
 
