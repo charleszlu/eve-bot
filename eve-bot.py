@@ -313,7 +313,7 @@ class mumbleConnection(threading.Thread):
                         mimicNick=self.mimicPrefix+victimNick+str(i)
             i=i+1
         #Create mimic object and timed message queue etc.
-        mimic = mumbleConnection(self.host,mimicNick,self.mimicChannel,mimic=True,mimicVersion=self.mimicVer,password=self.password,verbose=self.verbose)
+        mimic = mumbleConnection(self.host,mimicNick,self.mimicChannel,mimic=True,mimicVersion=self.mimicVersion,password=self.password,verbose=self.verbose)
         pp=mimic.plannedPackets
         self.mimicList[session]={"plannedPackets":pp}
         self.mimicList[session]["setClose"]=mimic.setClose
@@ -423,7 +423,7 @@ class mumbleConnection(threading.Thread):
         pbMess.release=self.mimicVersion
 		#If version 1.2.19 then use bit masked version (1 << 16) + (2 << 8) + 19 => 65536 + 512 + 18 = 66067
         ver = self.mimicVersion.split('.')
-        pbMess.version=(ver[0] << 16) + (ver[1] << 8) + ver[2]
+        pbMess.version=(int(ver[0]) << 16) + (int(ver[1]) << 8) + int(ver[2])
         pbMess.os=platform.system()
         pbMess.os_version="eve-bot"
 
@@ -499,7 +499,7 @@ def main():
         sys.exit(1)
     
     mimic_ver = o.mimic_version.split('.')
-    if len(mimic_ver) != 3 and not all(isinstance(x, int) for x in mimic_ver):
+    if len(mimic_ver) != 3 or not all(x.isnumeric() for x in mimic_ver):
         print("\n--mimic-version provided must be in the format of Major.Minor.Patch (e.g. 1.2.19)")
         sys.exit(1)
 
