@@ -1,8 +1,10 @@
 FROM python:3.7-alpine
 
-RUN apk --update add --no-cache bash tzdata
+RUN apk --update add --no-cache \
+    bash
 
-RUN pip install --no-cache-dir protobuf==3.7.1
+RUN pip install --no-cache-dir \
+    protobuf==3.8.0
 
 WORKDIR /eve-bot
 
