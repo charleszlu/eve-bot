@@ -7,7 +7,7 @@ FROM python:${PYTHON_VER}-alpine AS builder
 ARG PROTOBUF_VER
 ARG MUMBLE_VER
 
-RUN apk --update add --no-cache --virtual .build-deps \
+RUN apk --update add --no-cache \
     libtool \
     make \
     g++
@@ -19,8 +19,7 @@ RUN cd /tmp && \
     ./configure && \
     make && \
     make check && \
-    make install && \
-    apk del .build-deps
+    make install
 
 RUN cd /tmp && \
     wget https://github.com/mumble-voip/mumble/releases/download/${MUMBLE_VER}/mumble-${MUMBLE_VER}.tar.gz && \
